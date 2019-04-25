@@ -26,7 +26,7 @@ class MenuState extends FlxState {
         _btnSettings.x = FlxG.width/2 - _btnSettings.width/2;
         _btnSettings.y = FlxG.height/2 - _btnSettings.height/2 + 40;
 
-        _btnCredits = new FlxButton(0, 0, "Credits");
+        _btnCredits = new FlxButton(0, 0, "Credits", goCredits);
         _btnCredits.x = FlxG.width/2 - _btnCredits.width/2;
         _btnCredits.y = FlxG.height/2 - _btnCredits.height/2 + 70;
 
@@ -45,7 +45,7 @@ class MenuState extends FlxState {
     //     FlxG.switchState(new SettingsState());
     // }
 
-    // function goCredits():Void {
-    //     FlxG.switchState(new CreditsState());
-    // }
+    function goCredits():Void {
+        FlxG.switchState(new CreditsState());
+    }
 }
