@@ -12,6 +12,11 @@ class MenuState extends FlxState {
     var _btnCredits:FlxButton;
     
     override public function create():Void {
+        // don't restart the music if it's already playing
+        if (FlxG.sound.music == null) {
+            FlxG.sound.playMusic(AssetPaths.awesomeness__wav, 1, true);
+        }
+
         _title = new FlxText(0, 0, 0, "The Game", 40);
         _title.x = FlxG.width/2 - _title.width/2;
         _title.y = FlxG.height/2 - _title.height/2 - 40;
@@ -22,7 +27,7 @@ class MenuState extends FlxState {
         _btnPlay.x = FlxG.width/2 - _btnPlay.width/2;
         _btnPlay.y = FlxG.height/2 - _btnPlay.height/2 + 10;
 
-        _btnSettings = new FlxButton(0, 0, "Settings");
+        _btnSettings = new FlxButton(0, 0, "Settings", goSettings);
         _btnSettings.x = FlxG.width/2 - _btnSettings.width/2;
         _btnSettings.y = FlxG.height/2 - _btnSettings.height/2 + 40;
 
@@ -41,9 +46,9 @@ class MenuState extends FlxState {
         FlxG.switchState(new PlayState());
     }
 
-    // function goSettings():Void {
-    //     FlxG.switchState(new SettingsState());
-    // }
+    function goSettings():Void {
+        FlxG.switchState(new SettingsState());
+    }
 
     function goCredits():Void {
         FlxG.switchState(new CreditsState());

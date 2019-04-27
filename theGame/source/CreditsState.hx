@@ -11,6 +11,8 @@ class CreditsState extends FlxState {
     var _textCreated:FlxText;
     var _titleArt:FlxText;
     var _textArt:FlxText;
+    var _titleMusic:FlxText;
+    var _textMusic:FlxText;
     var _btnBack:FlxButton;
     
     override public function create():Void {
@@ -24,8 +26,6 @@ class CreditsState extends FlxState {
         _titleCreated.y = _titleCredits.y + _titleCredits.height/2 + _titleCreated.height/2 + 20;
         _titleCreated.color = 0x001ce202;
         _titleCreated.alignment = CENTER;
-        // _titleCreated.moves = true;
-        // _titleCreated.velocity.y = -10;
 
         _textCreated = new FlxText(0, 0, 0, "Vitor G. Forbrig\ngithub.com/Forbrig", 10);
         _textCreated.x = FlxG.width/2 - _textCreated.width/2;
@@ -46,6 +46,19 @@ class CreditsState extends FlxState {
         _textArt.color = 0x001ce202;
         _textArt.alignment = CENTER;
 
+        // ------- MUSIC BY -------
+        _titleMusic = new FlxText(0, 0, 0, "[Music]", 20);
+        _titleMusic.x = FlxG.width/2 - _titleMusic.width/2;
+        _titleMusic.y = _textArt.y + _textArt.height/2 + _titleMusic.height/2 + 20;
+        _titleMusic.color = 0x001ce202;
+        _titleMusic.alignment = CENTER;
+
+        _textMusic = new FlxText(0, 0, 0, "Menu:                  awesomeness by mrpoly\navailable for free at: opengameart.org", 10);
+        _textMusic.x = FlxG.width/2 - _textMusic.width/2;
+        _textMusic.y = _titleMusic.y + _titleMusic.height/2 + _textMusic.height/2 + 10;
+        _textMusic.color = 0x001ce202;
+        _textMusic.alignment = CENTER;
+
         // ------- BUTTON BACK -------
         _btnBack = new FlxButton(0, 0, "Back", goMenu);
         _btnBack.x = FlxG.width - _btnBack.width - 40;
@@ -56,6 +69,8 @@ class CreditsState extends FlxState {
         add(_textCreated);
         add(_titleArt);
         add(_textArt);
+        add(_titleMusic);
+        add(_textMusic);
         add(_btnBack);
         super.create();
     }
