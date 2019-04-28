@@ -74,6 +74,10 @@ class CreditsState extends FlxState {
         add(_btnBack);
         super.create();
     }
+    
+    override public function destroy():Void {
+		super.destroy();
+	}
 
     function goMenu():Void {
         FlxG.switchState(new MenuState());

@@ -34,6 +34,10 @@ class SettingsState extends FlxState {
         super.create();
     }
 
+    override public function destroy():Void {
+		super.destroy();
+	}
+
     function goMenu():Void {
         FlxG.switchState(new MenuState());
     }

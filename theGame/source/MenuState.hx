@@ -42,7 +42,12 @@ class MenuState extends FlxState {
         super.create();
     }
 
+    override public function destroy():Void {
+		super.destroy();
+	}
+
     function goPlay():Void {
+        FlxG.sound.music.pause();
         FlxG.switchState(new PlayState());
     }
 
