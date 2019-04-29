@@ -10,9 +10,8 @@ class Player extends FlxSprite {
         super(x, y);
 
         drag.x = drag.y = 1600;
-        makeGraphic(16, 16, FlxColor.BLUE);
+        makeGraphic(32, 32, FlxColor.BLUE);
     }
-
 
     function movement() {
         var _up:Bool = false;

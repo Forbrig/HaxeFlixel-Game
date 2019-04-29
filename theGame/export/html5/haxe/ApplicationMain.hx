@@ -15,11 +15,11 @@ class ApplicationMain
 	#if !macro
 	public static function main()
 	{
-		lime.system.System.__registerEntryPoint("VSCodeTest", create);
+		lime.system.System.__registerEntryPoint("theGame", create);
 
 		#if (js && html5)
 		#if (munit || utest)
-		lime.system.System.embed("VSCodeTest", null, 640, 480);
+		lime.system.System.embed("theGame", null, 1024, 768);
 		#end
 		#else
 		create(null);
@@ -32,10 +32,10 @@ class ApplicationMain
 
 		ManifestResources.init(config);
 
-		app.meta["build"] = "1";
+		app.meta["build"] = "5";
 		app.meta["company"] = "HaxeFlixel";
-		app.meta["file"] = "VSCodeTest";
-		app.meta["name"] = "VSCodeTest";
+		app.meta["file"] = "theGame";
+		app.meta["name"] = "theGame";
 		app.meta["packageName"] = "com.example.myapp";
 		app.meta["version"] = "0.0.1";
 
@@ -51,14 +51,14 @@ class ApplicationMain
 			element: null,
 			frameRate: 60,
 			#if !web fullscreen: false, #end
-			height: 480,
+			height: 768,
 			hidden: #if munit true #else false #end,
 			maximized: false,
 			minimized: false,
 			parameters: {},
 			resizable: false,
-			title: "VSCodeTest",
-			width: 640,
+			title: "theGame",
+			width: 1024,
 			x: null,
 			y: null,
 		};
