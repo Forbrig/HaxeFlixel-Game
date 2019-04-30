@@ -13,12 +13,12 @@ class Player extends FlxSprite {
         makeGraphic(32, 32, FlxColor.BLUE);
     }
 
-    function movement() {
+    public function movement() {
         var _up:Bool = false;
         var _down:Bool = false;
         var _left:Bool = false;
         var _right:Bool = false;
-
+        
         if (FlxG.keys.anyPressed([UP, W])) {
             _up = true;
         }
@@ -57,7 +57,7 @@ class Player extends FlxSprite {
             }
 
         } else {
-
+            // idle
         }
     }
 

@@ -100,6 +100,7 @@ null
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_sounds_sounds_go_here_txt extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_data_goes_here_txt extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_maps_map1_tmx extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_maps_base_out_atlas_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_maps_base_tsx extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_maps_terrain_atlas_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_maps_tileset_tsx extends null { }
