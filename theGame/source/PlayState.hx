@@ -1,5 +1,7 @@
 package;
 
+import flixel.FlxSprite;
+
 import flixel.FlxObject;
 import flixel.FlxG;
 import flixel.FlxState;
@@ -16,7 +18,7 @@ class PlayState extends FlxState {
 	var _collisionMap:FlxTilemap;
 
 	override public function create():Void {
-		_player = new Player(20, 20);
+		_player = new Player(50, 50);
 
 		_backgroundMap = new FlxTilemap();
 		_foregroundMap = new FlxTilemap();
@@ -35,25 +37,25 @@ class PlayState extends FlxState {
 		var _collision = cast(_tiledMap.getLayer("collision"), TiledTileLayer);
 		_collisionMap.loadMapFromArray(_collision.tileArray, _collision.width, _collision.height, "assets/data/maps/terrain_atlas.png", 32, 32, FlxTilemapAutoTiling.OFF, 1);
 
+		// _collisionMap.setTileProperties(34, FlxObject.ANY);
+		// _collisionMap.setTileProperties(0, FlxObject.NONE);
+		// _collisionMap.follow();
 
 		add(_backgroundMap);
+
 		add(_player);
 
 		add(_foregroundMap);
 		add(_collisionMap);
+
+
 		super.create();
 	}
 
 	override public function update(elapsed:Float):Void {
-		
 
-		// FlxG.collide(_collisionMap, _player);
+		FlxG.collide(_collisionMap, _player);
 		
-		// if (_collisionMap.overlaps(_player)) {
-		// 	FlxObject.separate(_collisionMap, _player);
-		// }
-		trace(_collisionMap.overlaps(_player));
-
 		super.update(elapsed);
 	}
 

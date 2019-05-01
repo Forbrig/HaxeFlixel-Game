@@ -1,38 +1,63 @@
 package;
 
 import flixel.FlxG;
-import flixel.util.FlxColor;
 import flixel.FlxSprite;
+// import flixel.system.FlxAssets;
+// import flixel.util.FlxColor;
+
 
 class Player extends FlxSprite {
     public var _speed:Float = 200;
+    public var _facing = '';
+
+
     public function new(x:Int, y:Int) {
         super(x, y);
 
-        drag.x = drag.y = 1600;
-        makeGraphic(32, 32, FlxColor.BLUE);
+        drag.x = drag.y = 2000;
+        maxVelocity.set(_speed, _speed);
+
+		loadGraphic(AssetPaths.characters__png, true, 16, 16);
+        scale.set(2, 2);
+
+        // Animations
+        animation.add("iddle_up", [37], 6, false);
+        animation.add("iddle_down", [1], 6, false);
+        animation.add("iddle_left", [13], 6, false);
+        animation.add("iddle_right", [25], 6, false);
+
+        animation.add("walking_up", [36, 37, 38], 6, false);
+        animation.add("walking_down", [0, 1, 2], 6, false);
+        animation.add("walking_left", [12, 13, 14], 6, false);
+        animation.add("walking_right", [24, 25, 26], 6, false);
+
+        // makeGraphic(32, 32, FlxColor.BLUE);
     }
 
-    public function movement() {
+    function movement() {
         var _up:Bool = false;
         var _down:Bool = false;
         var _left:Bool = false;
         var _right:Bool = false;
-        
+
         if (FlxG.keys.anyPressed([UP, W])) {
             _up = true;
+            _facing = 'up';
         }
 
         if (FlxG.keys.anyPressed([DOWN, S])) {
             _down = true;
+            _facing = 'down';
         }
 
         if (FlxG.keys.anyPressed([LEFT, A])) {
             _left = true;
+            _facing = 'left';
         }
 
         if (FlxG.keys.anyPressed([RIGHT, D])) {
             _right = true;
+            _facing = 'right';
         }
 
         if (_up && _down) {
@@ -58,23 +83,38 @@ class Player extends FlxSprite {
 
         } else {
             // idle
+            switch (_facing) {
+                case 'up':
+                    animation.play("iddle_up");
+                case 'down':
+                    animation.play("iddle_down");
+                case 'left':
+                    animation.play("iddle_left");
+                case 'right':
+                    animation.play("iddle_right");
+
+            }
         }
     }
 
     function moveLeft() {
-        x -= 20;
+        velocity.x -= _speed;
+        animation.play("walking_left");
     }
 
     function moveRight() {
-        x += 20;
+        velocity.x += _speed;
+        animation.play("walking_right");
     }
 
     function moveUp() {
-        y -= 20;
+        velocity.y -= _speed;
+        animation.play("walking_up");
     }
 
     function moveDown() {
-        y += 20;
+        velocity.y += _speed;
+        animation.play("walking_down");
     }
 
     override public function update(elapsed:Float):Void {
