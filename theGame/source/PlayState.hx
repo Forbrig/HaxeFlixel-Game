@@ -10,15 +10,22 @@ import flixel.tile.FlxBaseTilemap;
 import flixel.addons.editors.tiled.TiledMap;
 import flixel.addons.editors.tiled.TiledTileLayer;
 
-
 class PlayState extends FlxState {
 	var _player:Player;
+	// var _hud:HUD;
+ 	// var _health:Int = 3;
+
+	var _slime:Slime;
 	var _backgroundMap:FlxTilemap;
 	var _foregroundMap:FlxTilemap;
 	var _collisionMap:FlxTilemap;
 
 	override public function create():Void {
+		FlxG.mouse.visible = false;
+
+		// _hud = new HUD();
 		_player = new Player(50, 50);
+		_slime = new Slime(200, 200);
 
 		_backgroundMap = new FlxTilemap();
 		_foregroundMap = new FlxTilemap();
@@ -43,11 +50,12 @@ class PlayState extends FlxState {
 
 		add(_backgroundMap);
 
+ 		// add(_hud);
 		add(_player);
+		add(_slime);
 
 		add(_foregroundMap);
 		add(_collisionMap);
-
 
 		super.create();
 	}
@@ -55,8 +63,17 @@ class PlayState extends FlxState {
 	override public function update(elapsed:Float):Void {
 
 		FlxG.collide(_collisionMap, _player);
+		FlxG.collide(_collisionMap, _slime);
+		FlxG.collide(_player, _slime, overlapped);
 		
 		super.update(elapsed);
+	}
+
+	function overlapped(Sprite1:FlxObject, Sprite2:FlxObject):Void {
+		// if (Std.is(Sprite1, EnemyBullet) || Std.is(Sprite1, Bullet)) {
+		// 	Sprite1.kill();
+		// }
+		Sprite1.hurt(0);
 	}
 
 	override public function destroy():Void {

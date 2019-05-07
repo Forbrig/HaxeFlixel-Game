@@ -2,12 +2,15 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.util.FlxSpriteUtil;
+
 // import flixel.system.FlxAssets;
 // import flixel.util.FlxColor;
 
 
 class Player extends FlxSprite {
-    public var _speed:Float = 200;
+	public var flickering:Bool = false;
+    public var _speed:Float = 150;
     public var _facing = '';
 
 
@@ -19,6 +22,7 @@ class Player extends FlxSprite {
 
 		loadGraphic(AssetPaths.characters__png, true, 16, 16);
         scale.set(2, 2);
+        updateHitbox();
 
         // Animations
         animation.add("iddle_up", [37], 6, false);
@@ -60,12 +64,16 @@ class Player extends FlxSprite {
             _facing = 'right';
         }
 
-        if (_up && _down) {
-            _up = _down = false;
-        }
+        // if (_up && _down) {
+        //     _up = _down = false;
+        // }
 
-        if (_left && _right) {
-            _left = _right = false;
+        // if (_left && _right) {
+        //     _left = _right = false;
+        // }
+
+        if (_left && _up || _left && _down || _right && _up || _right && _down || _up && _down || _left && _right) {
+            _up = _down = _left = _right = false;
         }
 
         if (_up || _down || _left || _right) {
@@ -121,6 +129,23 @@ class Player extends FlxSprite {
         movement();
         super.update(elapsed);
     }
+
+    override public function hurt(damage:Float):Void{
+        if (flickering) {
+			return;
+		}
+		
+		flicker(1);
+
+		super.hurt(damage);
+	}
+
+    function flicker(Duration:Float):Void {
+		FlxSpriteUtil.flicker(this, Duration, 0.02, true, true, function(_) {
+			flickering = false;
+		});
+		flickering = true;
+	}
 
     override public function destroy():Void {
 		super.destroy();
