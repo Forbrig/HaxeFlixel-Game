@@ -1,7 +1,5 @@
 package;
 
-import flixel.FlxSprite;
-
 import flixel.FlxObject;
 import flixel.FlxG;
 import flixel.FlxState;
@@ -12,7 +10,7 @@ import flixel.addons.editors.tiled.TiledTileLayer;
 
 class PlayState extends FlxState {
 	var _player:Player;
-	// var _hud:HUD;
+	var _hud:HUD;
  	// var _health:Int = 3;
 
 	var _slime:Slime;
@@ -23,7 +21,7 @@ class PlayState extends FlxState {
 	override public function create():Void {
 		FlxG.mouse.visible = false;
 
-		// _hud = new HUD();
+		_hud = new HUD();
 		_player = new Player(50, 50);
 		_slime = new Slime(200, 200);
 
@@ -50,7 +48,7 @@ class PlayState extends FlxState {
 
 		add(_backgroundMap);
 
- 		// add(_hud);
+ 		add(_hud);
 		add(_player);
 		add(_slime);
 
@@ -73,7 +71,8 @@ class PlayState extends FlxState {
 		// if (Std.is(Sprite1, EnemyBullet) || Std.is(Sprite1, Bullet)) {
 		// 	Sprite1.kill();
 		// }
-		Sprite1.hurt(0);
+		Sprite1.hurt(1);
+		_hud.updateHUD(_player.health);
 	}
 
 	override public function destroy():Void {

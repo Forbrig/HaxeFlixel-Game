@@ -12,11 +12,11 @@ class Player extends FlxSprite {
 	public var flickering:Bool = false;
     public var _speed:Float = 150;
     public var _facing = '';
-
-
+    
     public function new(x:Int, y:Int) {
         super(x, y);
 
+        health = 3;
         drag.x = drag.y = 2000;
         maxVelocity.set(_speed, _speed);
 
