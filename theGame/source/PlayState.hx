@@ -9,10 +9,11 @@ import flixel.addons.editors.tiled.TiledMap;
 import flixel.addons.editors.tiled.TiledTileLayer;
 
 class PlayState extends FlxState {
-	var _player:Player;
 	var _hud:HUD;
  	// var _health:Int = 3;
+	public var _player:Player;
 
+	var _bat:Bat;
 	var _slime:Slime;
 	var _backgroundMap:FlxTilemap;
 	var _foregroundMap:FlxTilemap;
@@ -24,6 +25,7 @@ class PlayState extends FlxState {
 		_hud = new HUD();
 		_player = new Player(50, 50);
 		_slime = new Slime(200, 200);
+		_bat = new Bat(400, 400);
 
 		_backgroundMap = new FlxTilemap();
 		_foregroundMap = new FlxTilemap();
@@ -51,6 +53,7 @@ class PlayState extends FlxState {
  		add(_hud);
 		add(_player);
 		add(_slime);
+		add(_bat);
 
 		add(_foregroundMap);
 		add(_collisionMap);
@@ -63,6 +66,7 @@ class PlayState extends FlxState {
 		FlxG.collide(_collisionMap, _player);
 		FlxG.collide(_collisionMap, _slime);
 		FlxG.collide(_player, _slime, overlapped);
+		FlxG.collide(_player, _bat, overlapped);
 		
 		super.update(elapsed);
 	}

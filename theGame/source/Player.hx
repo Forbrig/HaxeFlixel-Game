@@ -4,10 +4,6 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxSpriteUtil;
 
-// import flixel.system.FlxAssets;
-// import flixel.util.FlxColor;
-
-
 class Player extends FlxSprite {
 	public var flickering:Bool = false;
     public var _speed:Float = 150;
@@ -34,8 +30,6 @@ class Player extends FlxSprite {
         animation.add("walking_down", [0, 1, 2], 6, false);
         animation.add("walking_left", [12, 13, 14], 6, false);
         animation.add("walking_right", [24, 25, 26], 6, false);
-
-        // makeGraphic(32, 32, FlxColor.BLUE);
     }
 
     function movement() {
