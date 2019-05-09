@@ -7,13 +7,15 @@ import flixel.tile.FlxTilemap;
 import flixel.tile.FlxBaseTilemap;
 import flixel.addons.editors.tiled.TiledMap;
 import flixel.addons.editors.tiled.TiledTileLayer;
+import flixel.group.FlxGroup;
 
 class PlayState extends FlxState {
 	var _hud:HUD;
  	// var _health:Int = 3;
 	public var _player:Player;
 
-	var _bat:Bat;
+	// var _bat:Bat;
+	var _bats:FlxTypedGroup<Bat>;
 	var _slime:Slime;
 	var _backgroundMap:FlxTilemap;
 	var _foregroundMap:FlxTilemap;
@@ -25,7 +27,12 @@ class PlayState extends FlxState {
 		_hud = new HUD();
 		_player = new Player(50, 50);
 		_slime = new Slime(200, 200);
-		_bat = new Bat(400, 400);
+		// _bat = new Bat(400, 400);
+		_bats = new FlxTypedGroup<Bat>(8);
+
+		for (i in 0...8) {
+			_bats.add(new Bat(100 * (i+1), 100 * (i+1)));
+		}
 
 		_backgroundMap = new FlxTilemap();
 		_foregroundMap = new FlxTilemap();
@@ -53,9 +60,9 @@ class PlayState extends FlxState {
  		add(_hud);
 		add(_player);
 		add(_slime);
-		add(_bat);
-
 		add(_foregroundMap);
+		add(_bats);
+
 		add(_collisionMap);
 
 		super.create();
@@ -66,8 +73,13 @@ class PlayState extends FlxState {
 		FlxG.collide(_collisionMap, _player);
 		FlxG.collide(_collisionMap, _slime);
 		FlxG.collide(_player, _slime, overlapped);
-		FlxG.collide(_player, _bat, overlapped);
+		FlxG.collide(_player, _bats, overlapped);
+		FlxG.collide(_bats, _bats);
 		
+		if (_player.health <= 0) {
+			FlxG.switchState(new MenuState());
+		}
+
 		super.update(elapsed);
 	}
 

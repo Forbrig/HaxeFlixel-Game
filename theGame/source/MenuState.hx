@@ -12,6 +12,8 @@ class MenuState extends FlxState {
     var _btnCredits:FlxButton;
     
     override public function create():Void {
+		FlxG.mouse.visible = true;
+
         // don't restart the music if it's already playing
         if (FlxG.sound.music == null) {
             FlxG.sound.playMusic(AssetPaths.awesomeness__wav, 1, true);

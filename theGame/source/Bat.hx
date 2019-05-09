@@ -10,10 +10,10 @@ class Bat extends FlxSprite {
     public var _facing = '';
     public var _directionAimVect:FlxPoint;
 
-    public function new(x:Int, y:Int) {
+    public function new(x:Int = 0, y:Int = 0) {
         super(x, y);
 
-        // drag.x = drag.y = 2000;
+        drag.x = drag.y = 100;
         maxVelocity.set(_speed, _speed);
 
 		loadGraphic(AssetPaths.characters__png, true, 16, 16);
@@ -39,16 +39,16 @@ class Bat extends FlxSprite {
         acceleration.x = _directionAimVect.x;
         acceleration.y = _directionAimVect.y;
 
-        if (velocity.x > 0 && (velocity.x > velocity.y || velocity.x > -velocity.y)) {
+        if (velocity.x > velocity.y && velocity.x > (velocity.y * -1)) {
              animation.play("right");
             _facing = 'right';
-        } else if (velocity.x < 0 && (-velocity.x > velocity.y || -velocity.x > -velocity.y)) {
+        } else if ((velocity.x * -1) > velocity.y && (velocity.x * -1) > (velocity.y * -1)) {
             animation.play("left");
             _facing = 'left';
-        } else if (velocity.y > 0 && (velocity.y > velocity.x || velocity.y > -velocity.x)) {
+        } else if (velocity.y > velocity.x && velocity.y > (velocity.x * -1)) {
             animation.play("down");
             _facing = 'down';
-        } else if (velocity.y < 0 && (-velocity.y > velocity.x || -velocity.y > -velocity.x)) {
+        } else if ((velocity.y * -1) > velocity.x && (velocity.y * -1) > (velocity.x * -1)) {
             animation.play("up");
             _facing = 'up';
         }
