@@ -4,7 +4,7 @@ First assignment of Jogos Digitais (Tópicos especiais em computação XVIII) at
 Name: Vitor Guilherme Forbrig
 Enrollment: 1411100045
 
-Access the link to play the game: forbrig.github.io/the-game/
+Access the link to play the game: forbrig.github.io/bin/
 
 Keys:
 

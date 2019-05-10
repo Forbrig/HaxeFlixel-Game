@@ -17,6 +17,9 @@ class Player extends FlxSprite {
         maxVelocity.set(_speed, _speed);
 
 		loadGraphic(AssetPaths.characters__png, true, 16, 16);
+		// loadGraphic(AssetPaths.kritatest__png, true, 32, 32);
+        // animation.add("iddle_down", [0, 1, 2], 4, false);
+
         scale.set(2, 2);
         updateHitbox();
 
@@ -26,10 +29,10 @@ class Player extends FlxSprite {
         animation.add("iddle_left", [13], 6, false);
         animation.add("iddle_right", [25], 6, false);
 
-        animation.add("walking_up", [36, 37, 38], 6, false);
-        animation.add("walking_down", [0, 1, 2], 6, false);
-        animation.add("walking_left", [12, 13, 14], 6, false);
-        animation.add("walking_right", [24, 25, 26], 6, false);
+        animation.add("walking_up", [36, 37, 38, 37], 6, false);
+        animation.add("walking_down", [0, 1, 2, 1], 6, false);
+        animation.add("walking_left", [12, 13, 14, 13], 6, false);
+        animation.add("walking_right", [24, 25, 26, 25], 6, false);
     }
 
     function movement() {

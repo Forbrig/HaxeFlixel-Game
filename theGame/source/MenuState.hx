@@ -19,23 +19,26 @@ class MenuState extends FlxState {
             FlxG.sound.playMusic(AssetPaths.awesomeness__wav, 1, true);
         }
 
-        _title = new FlxText(0, 0, 0, "The Game", 40);
+        _title = new FlxText(0, 0, 0, "The Game", 80);
         _title.x = FlxG.width/2 - _title.width/2;
-        _title.y = FlxG.height/2 - _title.height/2 - 40;
-        _title.moves = true;
-        _title.angularVelocity = 20;
+        _title.y = 180;
+        // _title.moves = true;
+        // _title.angularVelocity = 20;
 
         _btnPlay = new FlxButton(0, 0, "Play", goPlay);
+        _btnPlay.scale.set(2, 2);
         _btnPlay.x = FlxG.width/2 - _btnPlay.width/2;
         _btnPlay.y = FlxG.height/2 - _btnPlay.height/2 + 10;
 
         _btnSettings = new FlxButton(0, 0, "Settings", goSettings);
+        _btnSettings.scale.set(2, 2);
         _btnSettings.x = FlxG.width/2 - _btnSettings.width/2;
-        _btnSettings.y = FlxG.height/2 - _btnSettings.height/2 + 40;
+        _btnSettings.y = _btnPlay.y + (_btnPlay.height * 2) + 10;
 
         _btnCredits = new FlxButton(0, 0, "Credits", goCredits);
+        _btnCredits.scale.set(2, 2);
         _btnCredits.x = FlxG.width/2 - _btnCredits.width/2;
-        _btnCredits.y = FlxG.height/2 - _btnCredits.height/2 + 70;
+        _btnCredits.y = _btnSettings.y + (_btnSettings.height * 2) + 10;
 
         add(_title);
         add(_btnPlay);
