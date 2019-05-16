@@ -16,7 +16,7 @@ class PlayState extends FlxState {
 
 	// var _bat:Bat;
 	var _bats:FlxTypedGroup<Bat>;
-	var _slime:Slime;
+	public var _slime:Slime;
 	var _backgroundMap:FlxTilemap;
 	var _foregroundMap:FlxTilemap;
 	var _collisionMap:FlxTilemap;
@@ -28,9 +28,9 @@ class PlayState extends FlxState {
 		_player = new Player(50, 50, [W, S, A, D]);
 		_slime = new Slime(200, 200);
 		// _bat = new Bat(400, 400);
-		_bats = new FlxTypedGroup<Bat>(8);
+		_bats = new FlxTypedGroup<Bat>(5);
 
-		for (i in 0...8) {
+		for (i in 0...5) {
 			_bats.add(new Bat(100 * (i+1), 100 * (i+1)));
 		}
 

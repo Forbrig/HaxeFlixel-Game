@@ -39,10 +39,10 @@ class Slime extends FlxSprite {
         acceleration.x = _orientationVector.x;
         acceleration.y = _orientationVector.y;
 
-        if (velocity.x > velocity.y && velocity.x > (velocity.y * -1)) {
+        if (velocity.x >= velocity.y && velocity.x >= (velocity.y * -1)) {
              animation.play("right");
             _facing = 'right';
-        } else if ((velocity.x * -1) > velocity.y && (velocity.x * -1) > (velocity.y * -1)) {
+        } else if ((velocity.x * -1) >= velocity.y && (velocity.x * -1) >= (velocity.y * -1)) {
             animation.play("left");
             _facing = 'left';
         } else if (velocity.y > velocity.x && velocity.y > (velocity.x * -1)) {
