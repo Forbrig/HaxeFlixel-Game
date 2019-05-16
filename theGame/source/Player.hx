@@ -3,15 +3,17 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxSpriteUtil;
+import flixel.input.keyboard.*;
 
 class Player extends FlxSprite {
 	public var flickering:Bool = false;
     public var _speed:Float = 150;
     public var _facing = '';
+    public var _keys = [];
     
-    public function new(x:Int, y:Int) {
+    public function new(x:Int, y:Int, keys:Array<FlxKey>) {
         super(x, y);
-
+        _keys = keys;
         health = 3;
         drag.x = drag.y = 2000;
         maxVelocity.set(_speed, _speed);
@@ -41,22 +43,22 @@ class Player extends FlxSprite {
         var _left:Bool = false;
         var _right:Bool = false;
 
-        if (FlxG.keys.anyPressed([UP, W])) {
+        if (FlxG.keys.anyPressed([_keys[0]])) {
             _up = true;
             _facing = 'up';
         }
 
-        if (FlxG.keys.anyPressed([DOWN, S])) {
+        if (FlxG.keys.anyPressed([_keys[1]])) {
             _down = true;
             _facing = 'down';
         }
 
-        if (FlxG.keys.anyPressed([LEFT, A])) {
+        if (FlxG.keys.anyPressed([_keys[2]])) {
             _left = true;
             _facing = 'left';
         }
 
-        if (FlxG.keys.anyPressed([RIGHT, D])) {
+        if (FlxG.keys.anyPressed([_keys[3]])) {
             _right = true;
             _facing = 'right';
         }

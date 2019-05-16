@@ -25,7 +25,7 @@ class PlayState extends FlxState {
 		FlxG.mouse.visible = false;
 
 		_hud = new HUD();
-		_player = new Player(50, 50);
+		_player = new Player(50, 50, [W, S, A, D]);
 		_slime = new Slime(200, 200);
 		// _bat = new Bat(400, 400);
 		_bats = new FlxTypedGroup<Bat>(8);
