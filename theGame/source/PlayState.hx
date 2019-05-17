@@ -12,11 +12,9 @@ import flixel.group.FlxGroup;
 class PlayState extends FlxState {
 	var _hud:HUD;
  	// var _health:Int = 3;
-	public var _player:Player;
-
-	// var _bat:Bat;
+	public var _players:FlxTypedGroup<Player>;
 	var _bats:FlxTypedGroup<Bat>;
-	public var _slime:Slime;
+	var _slimes:FlxTypedGroup<Slime>;
 	var _backgroundMap:FlxTilemap;
 	var _foregroundMap:FlxTilemap;
 	var _collisionMap:FlxTilemap;
@@ -25,13 +23,17 @@ class PlayState extends FlxState {
 		FlxG.mouse.visible = false;
 
 		_hud = new HUD();
-		_player = new Player(50, 50, [W, S, A, D]);
-		_slime = new Slime(200, 200);
-		// _bat = new Bat(400, 400);
+
+		_players = new FlxTypedGroup<Player>(5);
+		_slimes = new FlxTypedGroup<Slime>(5);
 		_bats = new FlxTypedGroup<Bat>(5);
+
+		_players.add(new Player(50, 50, 1, [W, S, A, D]));
+		_players.add(new Player(50, 50, 2, [UP, DOWN, LEFT, RIGHT]));
 
 		for (i in 0...5) {
 			_bats.add(new Bat(100 * (i+1), 100 * (i+1)));
+			_slimes.add(new Slime(100 * (i+1), 100 * (i+1)));
 		}
 
 		_backgroundMap = new FlxTilemap();
@@ -56,13 +58,11 @@ class PlayState extends FlxState {
 		// _collisionMap.follow();
 
 		add(_backgroundMap);
-
  		add(_hud);
-		add(_player);
-		add(_slime);
+		add(_players);
+		add(_slimes);
 		add(_foregroundMap);
 		add(_bats);
-
 		add(_collisionMap);
 
 		super.create();
@@ -70,13 +70,14 @@ class PlayState extends FlxState {
 
 	override public function update(elapsed:Float):Void {
 
-		FlxG.collide(_collisionMap, _player);
-		FlxG.collide(_collisionMap, _slime);
-		FlxG.collide(_player, _slime, overlapped);
-		FlxG.collide(_player, _bats, overlapped);
+		FlxG.collide(_collisionMap, _players);
+		FlxG.collide(_collisionMap, _slimes);
+		FlxG.collide(_players, _slimes, overlapped);
+		FlxG.collide(_players, _bats, overlapped);
 		FlxG.collide(_bats, _bats);
+		FlxG.collide(_slimes, _slimes);
 		
-		if (_player.health <= 0) {
+		if (getPlayerById(1).health <= 0) {
 			FlxG.switchState(new MenuState());
 		}
 
@@ -88,8 +89,17 @@ class PlayState extends FlxState {
 		// 	Sprite1.kill();
 		// }
 		Sprite1.hurt(1);
-		_hud.updateHUD(_player.health);
+		_hud.updateHUD(getPlayerById(1).health);
 	}
+
+	public function getPlayerById(id:Int):Player {
+        for (p in _players) {
+            if (cast(p, Player)._id == id) {
+                return cast(p, Player);
+            }
+        }
+        return null;
+    }
 
 	override public function destroy():Void {
 		super.destroy();

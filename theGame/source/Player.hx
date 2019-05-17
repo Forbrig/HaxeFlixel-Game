@@ -6,13 +6,15 @@ import flixel.util.FlxSpriteUtil;
 import flixel.input.keyboard.*;
 
 class Player extends FlxSprite {
-	public var flickering:Bool = false;
-    public var _speed:Float = 150;
-    public var _facing = '';
-    public var _keys = [];
+    public var _id:Int;
+	var flickering:Bool = false;
+    var _speed:Float = 150;
+    var _facing = '';
+    var _keys = [];
     
-    public function new(x:Int, y:Int, keys:Array<FlxKey>) {
+    public function new(x:Int, y:Int, id:Int, keys:Array<FlxKey>) {
         super(x, y);
+        _id = id;
         _keys = keys;
         health = 3;
         drag.x = drag.y = 2000;

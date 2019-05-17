@@ -8,9 +8,8 @@ import flixel.FlxSprite;
 
 
 class Slime extends FlxSprite {
-    public var _speed:Float = 100;
-    public var _facing = '';
-
+    var _speed:Float = 100;
+    var _facing = '';
 
     public function new(x:Int, y:Int) {
         super(x, y);
@@ -55,7 +54,9 @@ class Slime extends FlxSprite {
     }
 
     override public function update(elapsed:Float):Void {
-        var playerPosition:FlxVector = new FlxVector(cast(FlxG.state, PlayState)._player.x, cast(FlxG.state, PlayState)._player.y);
+        var p = cast(FlxG.state, PlayState).getPlayerById(1);
+        var playerPosition:FlxVector = new FlxVector(p.x, p.y);
+        // var playerPosition:FlxVector = new FlxVector(cast(FlxG.state, PlayState)._player.x, cast(FlxG.state, PlayState)._player.y);
         seekPlayer(playerPosition);
         super.update(elapsed);
     }

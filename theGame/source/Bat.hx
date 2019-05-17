@@ -6,9 +6,9 @@ import flixel.math.FlxPoint;
 import flixel.math.FlxVector;
 
 class Bat extends FlxSprite {
-    public var _speed:Float = 100;
-    public var _facing = '';
-    public var _directionAimVect:FlxPoint;
+    var _speed:Float = 100;
+    var _facing = '';
+    var _directionAimVect:FlxPoint;
 
     public function new(x:Int = 0, y:Int = 0) {
         super(x, y);
@@ -83,14 +83,15 @@ class Bat extends FlxSprite {
     }
 
     override public function update(elapsed:Float):Void {
-        var playerPosition:FlxVector = new FlxVector(cast(FlxG.state, PlayState)._player.x, cast(FlxG.state, PlayState)._player.y);
+        var p = cast(FlxG.state, PlayState).getPlayerById(1);
+        var playerPosition:FlxVector = new FlxVector(p.x, p.y);
 
-        var slimePosition:FlxVector = new FlxVector(cast(FlxG.state, PlayState)._slime.x, cast(FlxG.state, PlayState)._slime.y);
+        // var slimePosition:FlxVector = new FlxVector(cast(FlxG.state, PlayState)._slime.x, cast(FlxG.state, PlayState)._slime.y);
         // seekPlayer(playerPosition);
         var steering = new FlxVector(0, 0);
 
-        steering.addPoint(seek(Std.int(slimePosition.x), Std.int(slimePosition.y)));
-        steering.addPoint(flee(Std.int(playerPosition.x), Std.int(playerPosition.y)));
+        // steering.addPoint(seek(Std.int(slimePosition.x), Std.int(slimePosition.y)));
+        steering.addPoint(seek(Std.int(playerPosition.x), Std.int(playerPosition.y)));
 
         acceleration.x = steering.x;
         acceleration.y = steering.y;

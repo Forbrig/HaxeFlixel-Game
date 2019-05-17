@@ -15,7 +15,6 @@ class MultiplayerState extends FlxState {
         add(_players);
         add(_multiplayer = new Multiplayer());
 
-
         super.create();
     }
 
