@@ -90,12 +90,17 @@ class Bat extends FlxSprite {
         var distance = playerPosition.subtractPoint(
             new FlxVector(this.x, this.y)
         );
+            FlxG.log.add(distance.length);
+
 
         if (distance.length <= 200) {
-            steering.addPoint(seek(Std.int(playerPosition.x), Std.int(playerPosition.y)));
+            steering.addPoint(seek(Std.int(playerPosition.x + p.width/2), Std.int(playerPosition.y + p.height/2)));
         } else {
             steering.addPoint(seek(Std.int(800), Std.int(550)));
         }
+
+            // steering.addPoint(seek(Std.int(playerPosition.x + p.width/2), Std.int(playerPosition.y + p.height/2)));
+
 
         // var slimePosition:FlxVector = new FlxVector(cast(FlxG.state, PlayState)._slime.x, cast(FlxG.state, PlayState)._slime.y);
         // seekPlayer(playerPosition);
