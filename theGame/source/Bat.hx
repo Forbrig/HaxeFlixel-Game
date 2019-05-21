@@ -85,13 +85,23 @@ class Bat extends FlxSprite {
     override public function update(elapsed:Float):Void {
         var p = cast(FlxG.state, PlayState).getPlayerById(1);
         var playerPosition:FlxVector = new FlxVector(p.x, p.y);
+        var steering = new FlxVector(0, 0);
+
+        var distance = playerPosition.subtractPoint(
+            new FlxVector(this.x, this.y)
+        );
+
+        if (distance.length <= 200) {
+            steering.addPoint(seek(Std.int(playerPosition.x), Std.int(playerPosition.y)));
+        } else {
+            steering.addPoint(seek(Std.int(800), Std.int(550)));
+        }
 
         // var slimePosition:FlxVector = new FlxVector(cast(FlxG.state, PlayState)._slime.x, cast(FlxG.state, PlayState)._slime.y);
         // seekPlayer(playerPosition);
-        var steering = new FlxVector(0, 0);
 
         // steering.addPoint(seek(Std.int(slimePosition.x), Std.int(slimePosition.y)));
-        steering.addPoint(seek(Std.int(playerPosition.x), Std.int(playerPosition.y)));
+        // steering.addPoint(seek(Std.int(playerPosition.x), Std.int(playerPosition.y)));
 
         acceleration.x = steering.x;
         acceleration.y = steering.y;
