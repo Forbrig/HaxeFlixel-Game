@@ -90,7 +90,7 @@ class Bat extends FlxSprite {
         var distance = playerPosition.subtractPoint(
             new FlxVector(this.x, this.y)
         );
-            FlxG.log.add(distance.length);
+            // FlxG.log.add(distance.length);
 
 
         if (distance.length <= 200) {
