@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 import flixel.math.FlxVector;
+import flixel.math.*;
 
 class Bat extends FlxSprite {
     var _speed:Float = 100;
@@ -87,19 +88,20 @@ class Bat extends FlxSprite {
         var playerPosition:FlxVector = new FlxVector(p.x, p.y);
         var steering = new FlxVector(0, 0);
 
-        var distance = playerPosition.subtractPoint(
-            new FlxVector(this.x, this.y)
-        );
+        // var distance = playerPosition.subtractPoint(
+        //     new FlxVector(this.x, this.y)
+        // );
             // FlxG.log.add(distance.length);
+        var distance = FlxMath.distanceBetween(p, this);
 
 
-        if (distance.length <= 200) {
+        if (distance <= 200) {
             steering.addPoint(seek(Std.int(playerPosition.x + p.width/2), Std.int(playerPosition.y + p.height/2)));
         } else {
             steering.addPoint(seek(Std.int(800), Std.int(550)));
         }
 
-            // steering.addPoint(seek(Std.int(playerPosition.x + p.width/2), Std.int(playerPosition.y + p.height/2)));
+        // steering.addPoint(seek(Std.int(playerPosition.x), Std.int(playerPosition.y)));
 
 
         // var slimePosition:FlxVector = new FlxVector(cast(FlxG.state, PlayState)._slime.x, cast(FlxG.state, PlayState)._slime.y);

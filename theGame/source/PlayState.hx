@@ -28,7 +28,7 @@ class PlayState extends FlxState {
 
 		_players = new FlxTypedGroup<Player>(1);
 		_slimes = new FlxTypedGroup<Slime>(5);
-		_bats = new FlxTypedGroup<Bat>(1);
+		_bats = new FlxTypedGroup<Bat>(5);
 
 		// _players.add(new Player(50, 50, 1, [W, S, A, D]));
 		// _players.add(new Player(50, 50, 2, [UP, DOWN, LEFT, RIGHT]));
