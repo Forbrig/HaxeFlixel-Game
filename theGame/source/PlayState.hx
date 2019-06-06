@@ -12,9 +12,11 @@ import flixel.group.FlxGroup;
 class PlayState extends FlxState {
 	var _hud:HUD;
  	// var _health:Int = 3;
+	public var _playerBullets:FlxTypedGroup<Bullet>;
 	public var _players:FlxTypedGroup<Player>;
 	var _bats:FlxTypedGroup<Bat>;
 	var _slimes:FlxTypedGroup<Slime>;
+
 	var _backgroundMap:FlxTilemap;
 	var _backgroundMap2:FlxTilemap;
 	var _foregroundMap:FlxTilemap;
@@ -26,7 +28,9 @@ class PlayState extends FlxState {
 
 		_hud = new HUD();
 
+		_playerBullets = new FlxTypedGroup<Bullet>();
 		_players = new FlxTypedGroup<Player>(1);
+
 		_slimes = new FlxTypedGroup<Slime>(5);
 		_bats = new FlxTypedGroup<Bat>(5);
 
@@ -68,7 +72,7 @@ class PlayState extends FlxState {
 		var _spawnObj = _objectSpawn.getTileInstances(305);
 		if (_spawnObj != null) {
 			for (i in _spawnObj) {
-				_players.add(new Player(Std.int(i % _objectSpawn.widthInTiles) * _tiledMap.tileWidth, Std.int(i / _objectSpawn.widthInTiles) * _tiledMap.tileHeight, id, [W, S, A, D]));
+				_players.add(new Player(id, Std.int(i % _objectSpawn.widthInTiles) * _tiledMap.tileWidth, Std.int(i / _objectSpawn.widthInTiles) * _tiledMap.tileHeight, _playerBullets, [W, S, A, D]));
 				id = id+1;
 			}
 		}
@@ -88,6 +92,7 @@ class PlayState extends FlxState {
 		add(_slimes);
 		add(_foregroundMap);
 		add(_bats);
+ 		add(_playerBullets);
 		add(_collisionMap);
 
 		super.create();
@@ -102,6 +107,12 @@ class PlayState extends FlxState {
 		FlxG.collide(_players, _bats, overlapped);
 		FlxG.collide(_bats, _bats);
 		FlxG.collide(_slimes, _slimes);
+
+		// bullets collision
+		FlxG.collide(_slimes, _playerBullets, overlapped);
+		FlxG.collide(_bats, _playerBullets, overlapped);
+		FlxG.collide(_playerBullets, _foregroundMap, overlapped);
+		FlxG.collide(_playerBullets, _playerBullets, overlapped);
 		
 		if (getPlayerById(1).health <= 0) {
 			FlxG.switchState(new PlayState());
@@ -114,6 +125,16 @@ class PlayState extends FlxState {
 		// if (Std.is(Sprite1, EnemyBullet) || Std.is(Sprite1, Bullet)) {
 		// 	Sprite1.kill();
 		// }
+		var sprite2ClassName:String = Type.getClassName(Type.getClass(Sprite2));
+		
+		// destroy bullets
+		if (sprite2ClassName == "Bullet") {
+			var b: Dynamic = cast(Sprite2, Bullet);
+			_playerBullets.remove(b);
+			Sprite2.destroy();
+            FlxG.log.add("bullet destroyed");
+		}
+
 		Sprite1.hurt(1);
 		_hud.updateHUD(getPlayerById(1).health);
 	}

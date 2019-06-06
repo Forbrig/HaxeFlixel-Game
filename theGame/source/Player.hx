@@ -2,23 +2,28 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.FlxObject;
 import flixel.util.FlxSpriteUtil;
 import flixel.input.keyboard.*;
+import flixel.group.FlxGroup;
 
 class Player extends FlxSprite {
+    private var bulletArray:FlxTypedGroup<Bullet>;
     public var _id:Int;
 	var flickering:Bool = false;
     var _speed:Float = 150;
-    var _facing = '';
+    var _facing:Int;
     var _keys = [];
     
-    public function new(x:Int, y:Int, id:Int, keys:Array<FlxKey>) {
+    public function new(id:Int, x:Int, y:Int, playerBulletArray:FlxTypedGroup<Bullet>, keys:Array<FlxKey>) {
+        bulletArray = playerBulletArray;
         super(x, y);
         _id = id;
         _keys = keys;
         health = 3;
         drag.x = drag.y = 2000;
         maxVelocity.set(_speed, _speed);
+        _facing = FlxObject.DOWN;
 
 		loadGraphic(AssetPaths.characters__png, true, 16, 16);
 		// loadGraphic(AssetPaths.kritatest__png, true, 32, 32);
@@ -47,31 +52,23 @@ class Player extends FlxSprite {
 
         if (FlxG.keys.anyPressed([_keys[0]])) {
             _up = true;
-            _facing = 'up';
+            _facing = FlxObject.UP;
         }
 
         if (FlxG.keys.anyPressed([_keys[1]])) {
             _down = true;
-            _facing = 'down';
+            _facing = FlxObject.DOWN;
         }
 
         if (FlxG.keys.anyPressed([_keys[2]])) {
             _left = true;
-            _facing = 'left';
+            _facing = FlxObject.LEFT;
         }
 
         if (FlxG.keys.anyPressed([_keys[3]])) {
             _right = true;
-            _facing = 'right';
+            _facing = FlxObject.RIGHT;
         }
-
-        // if (_up && _down) {
-        //     _up = _down = false;
-        // }
-
-        // if (_left && _right) {
-        //     _left = _right = false;
-        // }
 
         if (_left && _up || _left && _down || _right && _up || _right && _down || _up && _down || _left && _right) {
             _up = _down = _left = _right = false;
@@ -93,15 +90,14 @@ class Player extends FlxSprite {
         } else {
             // idle
             switch (_facing) {
-                case 'up':
+                case FlxObject.UP:
                     animation.play("iddle_up");
-                case 'down':
+                case FlxObject.DOWN:
                     animation.play("iddle_down");
-                case 'left':
+                case FlxObject.LEFT:
                     animation.play("iddle_left");
-                case 'right':
+                case FlxObject.RIGHT:
                     animation.play("iddle_right");
-
             }
         }
     }
@@ -126,9 +122,9 @@ class Player extends FlxSprite {
         animation.play("walking_down");
     }
 
-    override public function update(elapsed:Float):Void {
-        movement();
-        super.update(elapsed);
+    private function attack():Void {
+        var newBullet = new Bullet(this.x + (this.height / 2), this.y + (this.width / 2), 500, this._facing, 10);
+        bulletArray.add(newBullet);
     }
 
     override public function hurt(damage:Float):Void{
@@ -141,12 +137,22 @@ class Player extends FlxSprite {
 		super.hurt(damage);
 	}
 
+    // when player hurt he flicker and become invulnerable for a short time
     function flicker(Duration:Float):Void {
 		FlxSpriteUtil.flicker(this, Duration, 0.02, true, true, function(_) {
 			flickering = false;
 		});
 		flickering = true;
 	}
+
+    override public function update(elapsed:Float):Void {
+        movement();
+
+        if (FlxG.keys.justPressed.SPACE){
+            attack();
+        }
+        super.update(elapsed);
+    }
 
     override public function destroy():Void {
 		super.destroy();
