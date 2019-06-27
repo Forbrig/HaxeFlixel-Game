@@ -9,6 +9,7 @@ import flixel.util.FlxColor;
 class HUD extends FlxTypedGroup<FlxSprite> {
     var _txtElapsedTime:FlxText;
     var _txtHealth:FlxText;
+    // var _shourikens
     var _count:Float = 0;
 
     public function new() {
@@ -19,6 +20,10 @@ class HUD extends FlxTypedGroup<FlxSprite> {
         _txtHealth = new FlxText(32, 2, 0, "3 / 3", 32);
         _txtHealth.color = FlxColor.RED;
         _txtHealth.setBorderStyle(SHADOW, FlxColor.BLACK, 1, 1);
+
+
+
+
         add(_txtHealth);
         add(_txtElapsedTime);
         forEach(function(spr:FlxSprite) {
@@ -27,8 +32,6 @@ class HUD extends FlxTypedGroup<FlxSprite> {
     }
 
     public function updateHUD(Health:Float = 0):Void {
-        var _count:Float = 0;
-
         _txtHealth.text = Std.string(Health) + " / 3";
     }
 

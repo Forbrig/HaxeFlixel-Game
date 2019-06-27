@@ -8,14 +8,14 @@ import flixel.input.keyboard.*;
 import flixel.group.FlxGroup;
 
 class Player extends FlxSprite {
-    private var bulletArray:FlxTypedGroup<Bullet>;
+    private var bulletArray:FlxTypedGroup<Shuriken>;
     public var _id:Int;
 	var flickering:Bool = false;
     var _speed:Float = 150;
     var _facing:Int;
     var _keys = [];
     
-    public function new(id:Int, x:Int, y:Int, playerBulletArray:FlxTypedGroup<Bullet>, keys:Array<FlxKey>) {
+    public function new(id:Int, x:Int, y:Int, playerBulletArray:FlxTypedGroup<Shuriken>, keys:Array<FlxKey>) {
         bulletArray = playerBulletArray;
         super(x, y);
         _id = id;
@@ -123,7 +123,7 @@ class Player extends FlxSprite {
     }
 
     private function attack():Void {
-        var newBullet = new Bullet(this.x + (this.height / 2), this.y + (this.width / 2), 500, this._facing, 10);
+        var newBullet = new Shuriken(this.x + (this.height / 2), this.y + (this.width / 2), 500, this._facing, 10);
         bulletArray.add(newBullet);
     }
 

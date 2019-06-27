@@ -11,8 +11,7 @@ import flixel.group.FlxGroup;
 
 class PlayState extends FlxState {
 	var _hud:HUD;
- 	// var _health:Int = 3;
-	public var _playerBullets:FlxTypedGroup<Bullet>;
+	public var _playerBullets:FlxTypedGroup<Shuriken>;
 	public var _players:FlxTypedGroup<Player>;
 	var _bats:FlxTypedGroup<Bat>;
 	var _slimes:FlxTypedGroup<Slime>;
@@ -28,11 +27,11 @@ class PlayState extends FlxState {
 
 		_hud = new HUD();
 
-		_playerBullets = new FlxTypedGroup<Bullet>();
+		_playerBullets = new FlxTypedGroup<Shuriken>();
 		_players = new FlxTypedGroup<Player>(1);
 
 		_slimes = new FlxTypedGroup<Slime>(5);
-		_bats = new FlxTypedGroup<Bat>(5);
+		_bats = new FlxTypedGroup<Bat>(20);
 
 		// _players.add(new Player(50, 50, 1, [W, S, A, D]));
 		// _players.add(new Player(50, 50, 2, [UP, DOWN, LEFT, RIGHT]));
@@ -100,6 +99,11 @@ class PlayState extends FlxState {
 
 	override public function update(elapsed:Float):Void {
 
+		// _bats.forEachDead(function(_bat) {
+        //     _bat.revive();
+        // });
+
+
 		FlxG.collide(_collisionMap, _players);
 		FlxG.collide(_collisionMap, _slimes);
 		FlxG.collide(_players, _players);
@@ -118,6 +122,11 @@ class PlayState extends FlxState {
 			FlxG.switchState(new PlayState());
 		}
 
+		if (_bats.countLiving() == 0) {
+			FlxG.switchState(new PlayState());
+		}
+		
+
 		super.update(elapsed);
 	}
 
@@ -128,10 +137,10 @@ class PlayState extends FlxState {
 		var sprite2ClassName:String = Type.getClassName(Type.getClass(Sprite2));
 		
 		// destroy bullets
-		if (sprite2ClassName == "Bullet") {
-			var b: Dynamic = cast(Sprite2, Bullet);
+		if (sprite2ClassName == "Shuriken") {
+			var b: Dynamic = cast(Sprite2, Shuriken);
 			_playerBullets.remove(b);
-			Sprite2.destroy();
+			Sprite2.hurt(1);
             FlxG.log.add("bullet destroyed");
 		}
 

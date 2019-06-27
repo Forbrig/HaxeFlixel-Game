@@ -5,15 +5,18 @@ import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 import flixel.math.FlxVector;
 import flixel.math.*;
+import flixel.util.FlxSpriteUtil;
 
 class Bat extends FlxSprite {
     var _speed:Float = 100;
     var _facing = '';
     var _directionAimVect:FlxPoint;
+	var flickering:Bool = false;
 
     public function new(x:Int = 0, y:Int = 0) {
         super(x, y);
 
+        health = 1;
         drag.x = drag.y = 100;
         maxVelocity.set(_speed, _speed);
 
@@ -82,6 +85,23 @@ class Bat extends FlxSprite {
     public function flee(x:Int, y:Int): FlxVector {
         return seek(x, y).scale(-0.5);
     }
+
+    override public function hurt(damage:Float):Void{
+        if (flickering) {
+			return;
+		}
+		
+		flicker(1);
+
+		super.hurt(damage);
+	}
+
+    function flicker(Duration:Float):Void {
+		FlxSpriteUtil.flicker(this, Duration, 0.02, true, true, function(_) {
+			flickering = false;
+		});
+		flickering = true;
+	}
 
     override public function update(elapsed:Float):Void {
         var p = cast(FlxG.state, PlayState).getPlayerById(1);
