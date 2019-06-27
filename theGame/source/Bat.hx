@@ -16,7 +16,7 @@ class Bat extends FlxSprite {
     public function new(x:Int = 0, y:Int = 0) {
         super(x, y);
 
-        health = 1;
+        health = 3;
         drag.x = drag.y = 100;
         maxVelocity.set(_speed, _speed);
 
