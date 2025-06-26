@@ -1,12 +1,37 @@
 # HaxeFlixel Game
 
-First assignment of Jogos Digitais (Tópicos especiais em computação XVIII) at UFFS
+A 2D game built with [HaxeFlixel](https://haxeflixel.com/). Automatically deployed to GitHub Pages: [Play here!](https://forbrig.github.io/HaxeFlixel-Game/)
 
-Name: Vitor Guilherme Forbrig
-Enrollment: 1411100045
+## Controls
 
-Access the link to play the game: https://forbrig.github.io/GAMES-2019-T1/theGame/export/html5/bin/
+- **W, A, S, D**: Move player
+- **SPACE**: Throw shurikens
 
-Keys:
+## Setup & Development
 
-W, A, S, D, UP, DOWN, LEFT, RIGHT: Player movimentation.
+1. **Install dependencies:**
+   ```sh
+   haxelib install flixel
+   haxelib install formatter
+   haxelib install checkstyle
+   ```
+2. **Format code:**
+   ```sh
+   haxelib run formatter -s source
+   ```
+3. **Check code style:**
+   ```sh
+   haxelib run checkstyle source
+   ```
+
+- Formatting and linting rules are configured in `.haxefmt.json` and `checkstyle.json`.
+- For best experience, use [VS Code](https://code.visualstudio.com/) with the [vshaxe extension](https://marketplace.visualstudio.com/items?itemName=nadako.vshaxe).
+
+## Resources
+
+- [HaxeFlixel Documentation](https://haxeflixel.com/documentation/)
+- [Haxe Language](https://haxe.org/documentation/introduction/)
+
+---
+
+Enjoy playing and hacking on this project!

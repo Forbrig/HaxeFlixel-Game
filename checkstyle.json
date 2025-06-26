@@ -1,0 +1,18 @@
+{
+  "defaultSeverity": "INFO",
+  "checks": [
+    {
+      "type": "EmptyLines",
+      "props": {
+        "max": 1
+      }
+    },
+    {
+      "type": "FileLength",
+      "props": {
+        "severity": "WARNING",
+        "max": 2000
+      }
+    }
+  ]
+}
