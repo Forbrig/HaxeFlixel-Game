@@ -13,7 +13,7 @@ class PlayState extends FlxState {
 	var _hud:HUD;
 
 	public var _playerBullets:FlxTypedGroup<Shuriken>;
-	public var _players:FlxTypedGroup<Player>;
+	public var _player:Player;
 
 	var _bats:FlxTypedGroup<Bat>;
 	var _slimes:FlxTypedGroup<Slime>;
@@ -30,8 +30,7 @@ class PlayState extends FlxState {
 		_hud = new HUD();
 
 		_playerBullets = new FlxTypedGroup<Shuriken>();
-		_players = new FlxTypedGroup<Player>(1);
-
+	
 		_slimes = new FlxTypedGroup<Slime>(5);
 		_bats = new FlxTypedGroup<Bat>(20);
 
@@ -64,14 +63,15 @@ class PlayState extends FlxState {
 		var _spawn = cast(_tiledMap.getLayer("spawn"), TiledTileLayer);
 		_objectSpawn.loadMapFromArray(_spawn.tileArray, _spawn.width, _spawn.height, "assets/data/maps/terrain_atlas.png", 32, 32, FlxTilemapAutoTiling.OFF, 1);
 
+		// var _playerSpawn = _objectSpawn.getTilePos(305);
+		// var _playerSpawn = _objectSpawn.getTileInstances(305);
+		
 		// player spawn
-		var _spawnObj = _objectSpawn.getTileInstances(305);
-		if (_spawnObj != null) {
-			for (i in _spawnObj) {
-				_players.add(new Player(Std.int(i % _objectSpawn.widthInTiles) * _tiledMap.tileWidth,
-					Std.int(i / _objectSpawn.widthInTiles) * _tiledMap.tileHeight, _playerBullets, [W, S, A, D]));
-			}
-		}
+		var playerX:Int = Std.int(_tiledMap.tileWidth * 16);
+		var playerY:Int = Std.int(_tiledMap.tileHeight * 16);
+		_player = new Player(playerX, playerY, _playerBullets, [W, S, A, D]);
+		FlxG.watch.add(_player, "x");
+		FlxG.watch.add(_player, "y");
 
 		// bat spawn
 		for (i in 0..._bats.maxSize) {
@@ -98,7 +98,7 @@ class PlayState extends FlxState {
 		add(_backgroundMap);
 		add(_backgroundMap2);
 		add(_hud);
-		add(_players);
+		add(_player);
 		add(_slimes);
 		add(_foregroundMap);
 		add(_bats);
@@ -109,15 +109,15 @@ class PlayState extends FlxState {
 	}
 
 	override public function update(elapsed:Float):Void {
-		FlxG.collide(_collisionMap, _players);
-		FlxG.collide(_bats, _players, overlapped);
+		FlxG.collide(_collisionMap, _player);
+		FlxG.collide(_bats, _player, overlapped);
 		FlxG.collide(_bats, _bats);
 
 		// bullets collision
 		FlxG.collide(_playerBullets, _bats, overlapped);
 		FlxG.collide(_playerBullets, _foregroundMap, overlapped);
 
-		if (getPlayerById(1).health <= 0) {
+		if (_player.health <= 0) {
 			FlxG.switchState(() -> new MenuState());
 		}
 
@@ -141,17 +141,9 @@ class PlayState extends FlxState {
 			cast(victim, Player).hurt(1);
 		}
 
-		_hud.updateHUD(getPlayerById(1).health);
+		_hud.updateHUD(_player.health);
 	}
 
-	public function getPlayerById(id:Int):Player {
-		for (p in _players) {
-			if (cast(p, Player)._id == id) {
-				return cast(p, Player);
-			}
-		}
-		return null;
-	}
 
 	override public function destroy():Void {
 		super.destroy();

@@ -51,7 +51,7 @@ class Slime extends FlxSprite {
 	}
 
 	override public function update(elapsed:Float):Void {
-		var p = cast(FlxG.state, PlayState).getPlayerById(1);
+		var p = cast(FlxG.state, PlayState)._player;
 		var playerPosition:FlxPoint = new FlxPoint(p.x, p.y);
 		// var playerPosition:FlxVector = new FlxVector(cast(FlxG.state, PlayState)._player.x, cast(FlxG.state, PlayState)._player.y);
 		seekPlayer(playerPosition);

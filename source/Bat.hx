@@ -80,7 +80,7 @@ class Bat extends FlxSprite {
 	}
 
 	override public function update(elapsed:Float):Void {
-		var p = cast(FlxG.state, PlayState).getPlayerById(1);
+		var p = cast(FlxG.state, PlayState)._player;
 		var playerPosition:FlxPoint = new FlxPoint(p.x, p.y);
 		var steering = new FlxPoint(0, 0);
 
